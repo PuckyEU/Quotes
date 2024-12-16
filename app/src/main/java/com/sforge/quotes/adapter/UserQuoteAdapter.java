@@ -116,50 +116,57 @@ public class UserQuoteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         QuoteRepository quoteRepository = new QuoteRepository();
         UserQuoteRepository userQuoteRepository = new UserQuoteRepository(auth.getUid());
 
-        //get and delete the Quote ID
-        quoteRepository.getDatabaseReference().orderByChild("quote").equalTo(itemQuote).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    String quoteKey = child.getKey();
-                    Quote childQuote = child.getValue(Quote.class);
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(context);
+        builder.setTitle("Delete " + itemQuote + "?");
+        builder.setMessage("Are you sure you want to delete \"" + itemQuote + "\"? \n \n"  + context.getResources().getString(R.string.delete_quote_disclaimer));
+        builder.setPositiveButton("Yes", (dialogInterface, i) -> {
+            // Delete the quote from "/Users/uid/User Quotes/" path
+            userQuoteRepository.getDatabaseReference().orderByChild("quote").equalTo(itemQuote).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for (DataSnapshot child : dataSnapshot.getChildren()) {
+                        String userQuotesKey = child.getKey();
+                        Quote childQuote = child.getValue(Quote.class);
 
-                    if (childQuote != null && childQuote.getAuthor().equals(itemAuthor) && childQuote.getUser().equals(auth.getUid())) {
-                        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(context);
-                        builder.setTitle("Delete " + itemQuote + "?");
-                        builder.setMessage("Are you sure you want to delete \"" + itemQuote + "\"? \n \n"  + context.getResources().getString(R.string.delete_quote_disclaimer));
-                        builder.setPositiveButton("Yes", (dialogInterface, i) -> {
-                            //delete the quote from "/Quotes/" path
-                            quoteRepository.remove(quoteKey);
-                            //delete the quote from "/Users/uid/User Quotes/" path
-                            userQuoteRepository.getDatabaseReference().orderByChild("quote").equalTo(itemQuote).addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    for (DataSnapshot child : dataSnapshot.getChildren()) {
-                                        String userQuotesKey = child.getKey();
-                                        userQuoteRepository.remove(userQuotesKey);
-                                        Toast.makeText(context, "Quote has been successfully deleted.", Toast.LENGTH_LONG).show();
-                                    }
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-                                    Toast.makeText(context, "Failed To Retrieve Data. " + error, Toast.LENGTH_LONG).show();
-                                }
-                            });
-                        });
-                        builder.setNegativeButton("No", (dialogInterface, i) -> {
-                        });
-                        builder.create().show();
+                        if (childQuote != null && childQuote.getAuthor().equals(itemAuthor) && childQuote.getUser().equals(auth.getUid())) {
+                            userQuoteRepository.remove(userQuotesKey);
+                            Toast.makeText(context, "Quote has been successfully deleted.", Toast.LENGTH_LONG).show();
+                            break;
+                        }
                     }
                 }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(context, "Failed To Retrieve Data. " + error, Toast.LENGTH_LONG).show();
-            }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Toast.makeText(context, "Failed To Retrieve Data. " + error, Toast.LENGTH_LONG).show();
+                }
+            });
+
+            // Get and delete the Quote from the public quote path
+            quoteRepository.getDatabaseReference().orderByChild("quote").equalTo(itemQuote).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for (DataSnapshot child : dataSnapshot.getChildren()) {
+                        String quoteKey = child.getKey();
+                        Quote childQuote = child.getValue(Quote.class);
+
+                        if (childQuote != null && childQuote.getAuthor().equals(itemAuthor) && childQuote.getUser().equals(auth.getUid())) {
+                            // Delete the quote from "/Quotes/" path
+                            quoteRepository.remove(quoteKey);
+                            break;
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Toast.makeText(context, "Failed To Retrieve Data. " + error, Toast.LENGTH_LONG).show();
+                }
+            });
         });
+        builder.setNegativeButton("No", (dialogInterface, i) -> {
+        });
+        builder.create().show();
     }
 
     @Override

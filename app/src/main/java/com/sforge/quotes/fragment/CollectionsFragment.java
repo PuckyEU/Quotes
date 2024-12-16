@@ -40,11 +40,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link CollectionsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class CollectionsFragment extends Fragment implements CollectionActivityAdapter.OnItemClickListener, CollectionActivityAdapter.OnItemLongClickListener,
         CollectionActivityAdapter.OnFavoriteClickListener, QuoteAdapter.OnQuoteLongClickListener {
     private static final String ARG_VIEWED_COLLECTION = "viewedCollection";

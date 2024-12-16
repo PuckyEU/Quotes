@@ -100,8 +100,7 @@ public class CreateQuotesFragment extends Fragment {
 
     public void createQuote(){
         Quote quote = new Quote(createQuoteEditText.getText().toString(), createAuthorEditText.getText().toString(), user);
-        String key = userQuoteRepository.addWithKeyReturn(quote);
-        quoteRepository.addWithKey(key, quote)
+        userQuoteRepository.add(quote)
                 .addOnSuccessListener(suc -> Toast.makeText(getActivity(), "Quote is Added Successfully!", Toast.LENGTH_SHORT).show())
                 .addOnFailureListener(er-> Toast.makeText(getActivity(), "Failed To Add the Quote", Toast.LENGTH_SHORT).show())
                 .addOnCanceledListener(() -> Toast.makeText(getActivity(), "Canceled", Toast.LENGTH_SHORT).show());

@@ -6,11 +6,6 @@
             android:icon="@drawable/ic_home"
             android:title="@string/home"/>
     <item
-            android:id="@+id/navigation_explore"
-            android:enabled="true"
-            android:icon="@drawable/ic_explore"
-            android:title="@string/explore"/>
-    <item
             android:id="@+id/navigation_create"
             android:enabled="true"
             android:icon="@drawable/ic_baseline_add_24"
