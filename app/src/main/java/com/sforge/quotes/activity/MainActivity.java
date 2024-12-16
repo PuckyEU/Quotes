@@ -21,7 +21,6 @@ public class MainActivity extends AppCompatActivity implements CollectionsDialog
     public HomeFragment homeFragment;
     public UserProfileFragment userProfileFragment;
     public CreateQuotesFragment createQuotesFragment;
-    public ExploreFragment exploreFragment;
     public CollectionsFragment collectionsActivityFragment;
 
     @Override
@@ -37,18 +36,21 @@ public class MainActivity extends AppCompatActivity implements CollectionsDialog
         userProfileFragment.setEnterTransition(new Fade());
         createQuotesFragment = new CreateQuotesFragment();
         createQuotesFragment.setEnterTransition(new Fade());
-        exploreFragment = new ExploreFragment();
-        exploreFragment.setEnterTransition(new Fade());
         collectionsActivityFragment = new CollectionsFragment();
         collectionsActivityFragment.setEnterTransition(new Fade());
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, homeFragment).commit();
+        // Read the arguments from the intent.
+        if (getIntent().getBooleanExtra("create", false)) {
+            loadFragment(createQuotesFragment);
+        } else if (getIntent().getBooleanExtra("collections", false)) {
+            loadFragment(collectionsActivityFragment);
+        } else {
+            loadFragment(homeFragment);
+        }
 
         bottomNavigationView.setOnNavigationItemSelectedListener(navListener);
         bottomNavigationView.setOnNavigationItemReselectedListener(item -> {
-            if (item.getItemId() == R.id.navigation_explore) {
-                exploreFragment.expandSearch();
-            } else if (item.getItemId() == R.id.navigation_account) {
+            if (item.getItemId() == R.id.navigation_account) {
                 userProfileFragment.openSettingsSheet();
             }
         });
@@ -57,8 +59,6 @@ public class MainActivity extends AppCompatActivity implements CollectionsDialog
     public void loadFragment(Fragment fragment) {
         if (fragment instanceof HomeFragment) {
             bottomNavigationView.setSelectedItemId(R.id.navigation_home);
-        } else if (fragment instanceof ExploreFragment) {
-            bottomNavigationView.setSelectedItemId(R.id.navigation_explore);
         } else if (fragment instanceof CreateQuotesFragment) {
             bottomNavigationView.setSelectedItemId(R.id.navigation_create);
         } else if (fragment instanceof CollectionsFragment) {
@@ -82,9 +82,6 @@ public class MainActivity extends AppCompatActivity implements CollectionsDialog
                     switch (item.getItemId()) {
                         case R.id.navigation_home:
                             selectedFragment = homeFragment;
-                            break;
-                        case R.id.navigation_explore:
-                            selectedFragment = exploreFragment;
                             break;
                         case R.id.navigation_create:
                             selectedFragment = createQuotesFragment;
