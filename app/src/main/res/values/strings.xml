@@ -6,7 +6,7 @@
     </string>
     <string name="user_data_info">This shows you all the data stored in the database about you. For more info about
         how is data being stored, visit my
-        <a href="https://github.com/PuckyEU/Quotes#what-data-is-being-stored">Github page</a>
+        <a href="https://github.com/lukassobotik/Quotes#what-data-is-being-stored">Github page</a>
     </string>
     <string name="firebase">
         <a href="https://firebase.google.com/">Firebase</a>
@@ -19,7 +19,7 @@
     </string>
     <string name="about">Hi, I\'m an Indie developer, and I\'m trying to make the best apps I possibly can</string>
     <string name="github">This is an open source app, so you can find the apps code on my
-        <a href="https://github.com/PuckyEU/Quotes">Github page</a>
+        <a href="https://github.com/lukassobotik/Quotes">Github page</a>
     </string>
     <string name="tools_used">Tools used to create this app:</string>
     <string name="delete_account_message">This will delete all of your Quotes, Collections, and every other Data that is
@@ -41,9 +41,9 @@
     <string name="use_dynamic_color">Use Dynamic Color</string>
     <string name="greeting">Hello!</string>
     <string name="favorite_collections">Favorite Collections</string>
-    <string name="amount_of_collected_quotes">Amount of Collected Quotes</string>
+    <string name="number_of_collected_quotes">Number of Collected Quotes</string>
     <string name="_0">0</string>
-    <string name="amount_of_created_quotes">Amount of Created Quotes</string>
+    <string name="number_of_created_quotes">Number of Created Quotes</string>
     <string name="your_random_quote">Your Random Quote</string>
     <string name="no_quote_yet_create_one_now">No quote yet. Create one now!</string>
     <string name="minus_myquotes">- myQuotes</string>

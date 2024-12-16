@@ -60,7 +60,7 @@
             android:background="@color/transparent"
             android:fontFamily="sans-serif-condensed-medium"
             android:gravity="start|bottom"
-            android:text="@string/amount_of_collected_quotes"/>
+            android:text="@string/number_of_collected_quotes"/>
 
     <TextView
             android:id="@+id/collection_quote_count"
@@ -86,7 +86,7 @@
             android:background="@color/transparent"
             android:fontFamily="sans-serif-condensed-medium"
             android:gravity="start|bottom"
-            android:text="@string/amount_of_created_quotes"/>
+            android:text="@string/number_of_created_quotes"/>
 
     <TextView
             android:id="@+id/quote_count"
